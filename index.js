@@ -19,13 +19,13 @@ const httpServer = http.createServer(function(req, res) {
 	req.on('end', () => {
 		buffer += decoder.end()
 
-		const matchedHandler = typeof router[ trimmedPath ] !== 'undefined' ? handlers[ trimmedPath ] : handlers.notFound
+		const matchedHandler = typeof router[trimmedPath] !== 'undefined' ? handlers[trimmedPath] : handlers.notFound
 		const data = {
 			headers,
 			method,
 			payload: buffer,
 			queryString,
-			trimmedPath
+			trimmedPath,
 		}
 
 		matchedHandler(data, (statusCode = 200, payload = {}) => {
@@ -65,7 +65,6 @@ handlers.hello = (data, cb) => {
 	switch (data.method) {
 		case 'get':
 			return cb(200, { message: 'Hello world!' })
-			break
 		case 'post':
 			return cb(200, { message: 'Hello there!' })
 		default:
@@ -78,5 +77,5 @@ handlers.notFound = (data, cb) => {
 }
 
 const router = {
-	hello: handlers.hello
+	hello: handlers.hello,
 }
